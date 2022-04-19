@@ -23,6 +23,7 @@
 
     <!-- Hoja de estilos CSS  -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="js/inicio.js"></script>
 </head>
 
 <body>
@@ -55,34 +56,35 @@
             </div>
             <div class="row mb-5 text-center align-items-center justify-content-center">            
                 <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
+                    <form id="form" >
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name" >
                                     <label for="name">Nombre</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="email" placeholder="Your Email">
+                                    <input type="text" class="form-control" id="email" placeholder="Your Email" >
                                     <label for="email">Correo Electrónico</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="password" placeholder="password">
+                                    <input type="password" class="form-control" id="password2" placeholder="password" >
                                     <label for="password">Contraseña</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" placeholder="repassword" id="repassword">
+                                    <input type="password" class="form-control" placeholder="repassword" id="repassword" >
                                     <label for="repassword">Repite la Contraseña</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Registrarme</button>
+                                <p class="warnings" id="warnings"></p>
                             </div>
                         </div>
                     </form>
@@ -129,6 +131,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
 </body>
 
 </html>
