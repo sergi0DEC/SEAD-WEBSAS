@@ -1,6 +1,7 @@
 /********** CSS **********/
 :root {
-    --primary: #06BBCC;
+    --primary: #004fff;
+    /*--primary: #06BBCC*/
     --light: #F0FBFC;
     --dark: #181d38;
 }
