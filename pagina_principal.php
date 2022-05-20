@@ -1,3 +1,23 @@
+<?php
+  session_start();
+
+  require 'database.php';
+
+  if (isset($_SESSION['user_id'])) {
+    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+    $records->bindParam(':id', $_SESSION['user_id']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
+
+    $user = null;
+
+    if (count($results) > 0) {
+      $user = $results;
+    }
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +59,7 @@
 
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="pagina_principal.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="pagina_principal.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <img src="media/icono.ico" alt="" height="46">
             <h2 class="m-2 text-primary">WEB-SAS</h2>
         </a>
@@ -48,37 +68,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.html" class="nav-item nav-link active">Inicio</a>
+                <a href="pagina_principal.php" class="nav-item nav-link active">Inicio</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="#" class="dropdown-item">Ver inventario</a>
-                        <a href="404.html" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.html" class="dropdown-item">Modificar Inventario </a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Ajustes</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Elementos</a>
-                        <a href="#" class="dropdown-item">Acerca de..</a>
+                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
+                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cuenta</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Gestionar Cuenta </a>
-                        <a href="#" class="dropdown-item">Agregar Cuenta</a>
-                        <a href="index.html" class="dropdown-item">Cerrar Sesión</a>
-                    </div>
+                    <?php if(!empty($user)): ?>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>  
+                            <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
+                            <a href="#" class="dropdown-item">Ajustes</a>
+                            <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
+                        </div>                   
+                    </a>
+                    <?php else: ?>
+                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
             <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Barra de navegacion End -->
+
 
     <!-- Herrmamientas Start -->
    
@@ -89,7 +109,7 @@
         <div class="container">
             <div class="row g-8">
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="#">
+                    <a href="list.php">
                         <div class="service-item text-center pt-3">
                             <div class="p-4" >
                                 <i class="fa fa-3x fa-list-alt text-primary mb-4"></i>
@@ -99,7 +119,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <a href="404.html">
+                    <a href="404.php">
                         <div class="service-item text-center pt-3">
                             <div class="p-4">
                                 <i class="fa fa-3x fa-check-square text-primary mb-4"></i>
@@ -109,7 +129,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-users text-primary mb-4"></i>
@@ -119,7 +139,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-tags text-primary mb-4"></i>
@@ -129,7 +149,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-square text-primary mb-4"></i>
@@ -140,7 +160,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-square text-primary mb-4"></i>
@@ -151,7 +171,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-square text-primary mb-4"></i>
@@ -162,7 +182,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <a href="404.html">
+                    <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-square text-primary mb-4"></i>
@@ -189,9 +209,8 @@
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
-                            <a href="pagina_principal.html">Inicio</a>
-                            <a href="acerca-de.html">Acerca de</a>
-                            <a href="404.html">Preguntas frecuentes</a>
+                            <a href="pagina_principal.php">Inicio</a>
+                            <a href="acerca-de.php">Acerca de</a>
                         </div>
                     </div>
                 </div>
