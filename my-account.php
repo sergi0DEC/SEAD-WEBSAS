@@ -1,20 +1,34 @@
+<?php
+  session_start();
+
+  require 'database.php';
+
+  if (isset($_SESSION['user_id'])) {
+    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+    $records->bindParam(':id', $_SESSION['user_id']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
+
+    $user = null;
+
+    if (count($results) > 0) {
+      $user = $results;
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Página No Encontrada</title>
-    <!--Meta datos-->
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="derivadas, matemáticas, curso, cálculo, diferencial, aprender, gratis" name="keywords">
-    <meta content="Sitio web “la DERIVADA”, el mejor curso gratuito para aprender cálculo diferencial." name="description">
-
+    <title>Mi Cuenta</title>
+    <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 
     <!-- Hoja de estilos Icon Font -->
+    <!--link iconos disponibles https://fontawesome.com/v4/icons/-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -38,9 +52,10 @@
     </div>
     <!-- Cargando End -->
 
+
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="pagina_principal.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <img src="media/icono.ico" alt="" height="46">
             <h2 class="m-2 text-primary">WEB-SAS</h2>
         </a>
@@ -49,31 +64,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                <a href="pagina_principal.php" class="nav-item nav-link">Inicio</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="#" class="dropdown-item">Ver inventario</a>
-                        <a href="404.html" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.html" class="dropdown-item">Modificar Inventario </a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Ajustes</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Elementos</a>
-                        <a href="#" class="dropdown-item">Acerca de..</a>
+                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
+                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cuenta</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Gestionar Cuenta </a>
-                        <a href="#" class="dropdown-item">Agregar Cuenta</a>
-                        <a href="#" class="dropdown-item">Cerrar Sesión</a>
-                    </div>
+                    <?php if(!empty($user)): ?>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="my-account.php" class="dropdown-item active">Mi cuenta</a>  
+                            <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
+                            <a href="#" class="dropdown-item">Ajustes</a>
+                            <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
+                        </div>                   
+                    </a>
+                    <?php else: ?>
+                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
             <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
@@ -81,37 +95,51 @@
     </nav>
     <!-- Barra de navegacion End -->
 
+    <!-- my account start-->
+    <br><br><br><br><br>
+    <div class="card">
+        <div class="card-body">
+            <h1>Mis datos</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Contraseña</th>
+                        <th>Modificar datos</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <!-- 404 Start -->
-    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
-                    <h1 class="display-1">404</h1>
-                    <h1 class="mb-4">Página no encontrada</h1>
-                    <p class="mb-4">Lo sentimos, la página que has buscado no existe en el sitio!</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="index.html">Volver al inicio </a>
-                </div>
-            </div>
+                    <tr >
+                        <td> <?=$user['name'];?> </td>
+                        <td> <?=$user['email'];?></td>
+                        <td>············</td>
+                        <td> 
+                            <a href="my-account-edit.php" class="btn btn-info"> Editar </a>
+                                
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>          
         </div>
     </div>
-    <!-- 404 End -->
-        
-
+    <br><br><br><br><br><br>
+    <!-- my account end-->
+     
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">laderivada.com</a>, Todos los derechos reservados.                                      
+                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
-                            <a href="index.html">Inicio</a>
-                            <a href="acerca-de.html">Acerca de</a>
-                            <a href="404.html">Preguntas frecuentes</a>
+                            <a href="pagina_principal.php">Inicio</a>
+                            <a href="acerca-de.php">Acerca de</a>
                         </div>
                     </div>
                 </div>

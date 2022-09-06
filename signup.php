@@ -1,3 +1,33 @@
+<?php
+    function function_alert($message) {
+        
+        // Display the alert box 
+        echo "<script>alert('$message');</script>";
+    }
+
+  require 'database.php';
+
+  $message = '';
+
+  if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    $sql = "INSERT INTO users (email, name,password) VALUES (:email,:name, :password)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email', $_POST['email']);
+    $stmt->bindParam(':name', $_POST['name']);
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $stmt->bindParam(':password', $password);
+
+    if ($stmt->execute()) {
+      //$message = 'Usuario creado exitosamente';
+      function_alert("¡Usuario creado exitosamente!");
+      header("Refresh:0 , url = index.php");
+      exit();
+    } else {
+      $message = 'Lo siento, hubo un error al intentar crear su cuenta';
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,9 +67,10 @@
 
 
     <!-- Barra Navegación Start -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-light"><i class="fa fa-laptop me-3"></i>WEB-SAS</h2>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <img src="media/icono.ico" alt="" height="46">
+            <h2 class="m-2 text-primary">WEB-SAS</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -47,7 +78,13 @@
     </nav>
     <!-- Barra navegacion End -->
 
-    <!-- sing up Start -->
+    <!--Mensaje start-->
+    <?php if(!empty($message)): ?>
+      <h3> <?= $message ?></h3>
+    <?php endif; ?>
+    <!--Mensaje end-->
+
+    <!-- sign up Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -56,29 +93,29 @@
             </div>
             <div class="row mb-5 text-center align-items-center justify-content-center">            
                 <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form id="form" >
+                    <form action="signup.php" method="POST" >
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" >
+                                    <input name="name" type="text" class="form-control" id="name" placeholder="Enter your Name" required>
                                     <label for="name">Nombre</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="email" placeholder="Your Email" >
+                                    <input name="email" type="text" class="form-control" id="email" placeholder="Enter your Email" required>
                                     <label for="email">Correo Electrónico</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="password2" placeholder="password" >
+                                    <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
                                     <label for="password">Contraseña</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" placeholder="repassword" id="repassword" >
+                                    <input name="confirm_password" type="password" class="form-control" placeholder="Confirm password" id="repassword" required>
                                     <label for="repassword">Repite la Contraseña</label>
                                 </div>
                             </div>
@@ -86,13 +123,17 @@
                                 <button class="btn btn-primary w-100 py-3" type="submit">Registrarme</button>
                                 <p class="warnings" id="warnings"></p>
                             </div>
+                            <div class="col-md-12">
+                                <h6 class="mb-4">¿Ya tienes cuenta?</h6>
+                                <a href="index.php" class="btn btn-secondary w-100 py-3">Iniciar sesión</a>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- sing up End -->
+    <!-- sign up End -->
 
 
     <!-- Footer Start -->
@@ -105,9 +146,9 @@
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
-                            <a href="index.html">Inicio</a>
-                            <a href="acerca-de.html">Acerca de</a>
-                            <a href="404.html">Preguntas frecuentes</a>
+                            <a href="index.php">Inicio</a>
+                            <a href="acerca-de.php">Acerca de</a>
+                            <a href="404.php">Preguntas frecuentes</a>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,30 @@
+<?php
+
+  session_start();
+
+  if (isset($_SESSION['user_id'])) {
+    header('Location: /SEAD-WEBSAS-php/pagina_principal.php');
+  }
+  require 'database.php';
+
+  if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    $records = $conn->prepare('SELECT id, email, password FROM users WHERE email = :email');
+    $records->bindParam(':email', $_POST['email']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
+
+    $message = '';
+
+    if (count($results) > 0 && password_verify($_POST['password'], $results['password'])) {
+      $_SESSION['user_id'] = $results['id'];
+      header("Location: /SEAD-WEBSAS-php/pagina_principal.php");
+    } else {
+      $message = 'Las credenciales no coinciden, intente de nuevo.';
+    }
+  }
+
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -27,7 +54,7 @@
 <body>
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <img src="media/icono.ico" alt="" height="46">
             <h2 class="m-2 text-primary">WEB-SAS</h2>
         </a>
@@ -36,28 +63,34 @@
         </button>
     </nav>
     <!-- Barra navegacion End -->
+
+    <!-- Mensaje start-->
+    <?php if(!empty($message)): ?>
+      <h5> <?= $message ?></h5>
+    <?php endif; ?>
+    <!-- Mensaje end-->    
     
     <!-- login Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">INICIAR SESIÓN</h6>
-                <h1 class="mb-5 text-center">Bienvenido</h1>
+                <h1 class="mb-5 text-center">Bienvenido 6/9</h1>
             </div>
             <div class="row mb-5 text-center align-items-center justify-content-center">
                 
                 <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
-                    <form id="formulario"> 
+                    <form action="index.php" method="POST"> 
                         <div class="row g-3">                   
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="usuario" name = "usuario" placeholder="Usuario">
-                                    <label for="usuario">Usuario</label>
+                                    <input name="email" type="text" class="form-control" placeholder="Your Email" required>
+                                    <label for="email">Correo Electrónico</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="password" name="clave" placeholder="password">
+                                    <input name="password" type="password" class="form-control" placeholder="password" required>
                                     <label for="password">Contraseña</label>
                                 </div>
                             </div>
@@ -65,11 +98,10 @@
                                 <!--
                                 <button class="btn btn-primary w-100 py-3" type="submit" name = "accede" value="iniciar_sesion" id="boton" onclick="login()" onsubmit="login()">Acceder</button>
                                 -->
-                                <button class="btn btn-primary w-100 py-3" type="submit" name = "accede" value="Entrar" id="boton">Acceder</button>
-
+                                <input class="btn btn-primary w-100 py-3" type="submit" value="Enviar"></input>
                             </div>
                             <div class="col-md-6">
-                                <a href="sign-up.html" class="btn btn-secondary w-100 py-3">Crear Cuenta</a>
+                                <a href="signup.php" class="btn btn-secondary w-100 py-3">Crear Cuenta</a>
                             </div>
                         </div>
                     </form>
@@ -90,9 +122,9 @@
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
-                            <a href="index.html">Inicio</a>
-                            <a href="acerca-de.html">Acerca de</a>
-                            <a href="404.html">Preguntas frecuentes</a>
+                            <a href="index.php">Inicio</a>
+                            <a href="acerca-de.php">Acerca de</a>
+                            <a href="404.php">Preguntas frecuentes</a>
                         </div>
                     </div>
                 </div>
@@ -107,6 +139,7 @@
 
 
     <!-- JavaScript Libraries -->
+    <!--Aqui metemos JQuery-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
