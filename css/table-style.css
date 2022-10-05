@@ -1,0 +1,166 @@
+body {
+    background-color: #CCF2FC;
+}
+.header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    padding: 5px 13px 11px 0px;
+    width: 100%;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0px;
+    bottom: 0;
+    background-color: #298dba;
+}
+.header p {
+    margin-left: 20px;
+    text-align: left;
+}
+.button-logout {
+    position: relative;
+    margin-top: -50px;
+    margin-right: 20px;
+    float: right;
+    text-decoration: none;
+    border: transparent;
+    border-radius: 15px;
+    background-color: #e60000;
+    padding: 10px 10px 10px 10px;
+    color: white;
+    transition: 0.5s;
+}
+.button-logout:hover {
+    background-color: #D9ddd4;
+    color: red;
+}
+.container1 {
+    margin: 90px auto;
+    margin-bottom: 50px;
+    border-radius: 30px;
+    text-align: center;
+    background-color: white;
+    width: 40%;
+    padding-bottom: 10px;
+}
+
+table th,
+tr,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px 0px 10px 0px;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    color: white;
+    background-color: #004fff;
+}
+
+tr {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.timeregis {
+    text-align: center;
+}
+
+.form-group {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+[type=text], [type=number] {
+    font-family: "Mitr", sans-serif;
+    border-radius: 15px;
+    border: transparent;
+    padding: 7px 200px 7px 5px;
+}
+
+.return {
+    border-radius: 15px;
+    background-color: #ffcc33;
+    color: black;
+    text-decoration: none;
+    padding: 4px 40px 4px 40px;
+    margin: 0px 0px 50px 100px;
+    font-size: 20px;
+    transition: 0.5s;
+
+}
+
+.return:hover {
+    background-color: #fdb515;
+    color: white;
+}
+
+.modify {
+    border-radius: 15px;
+    border: transparent;
+    color: white;
+    padding: 4px 40px 4px 40px;
+    margin: 0px 50px 50px 100px;
+    font-size: 20px;
+    border-collapse: collapse;
+    background-color: #00A600;
+    font-family: "Mitr", sans-serif;
+    transition: 0.5s;
+
+}
+
+.modify1 {
+    text-align: center;
+}
+
+.modify1 .bfix {
+    border-radius: 15px;
+    background-color: #ffcc33;
+    color: black;
+    text-decoration: none;
+    padding: 4px 20px 4px 20px;
+    transition: 0.5s;
+}
+
+.modify1 .bfix:hover {
+    background-color: #fdb515;
+    color: white;
+}
+.delete .bdelete {
+    border-radius: 15px;
+    background-color: #e60000;
+    text-decoration: none;
+    color: white;
+    padding: 4px 20px 4px 20px;
+    transition: 0.5s;
+}
+.delete .bdelete:hover {
+    background-color: #D9ddd4;
+    color: red;
+}
+.Addlist {
+    margin-right: 100px;
+    padding: 5px 30px 5px 30px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: white;
+    background-color: #00A600;
+    transition: 0.5s;
+}
+.Addlist:hover {
+    color: black;
+    background-color: #BBFFBB;
+}
+.modify:hover {
+    color: black;
+    background-color: #BBFFBB;
+}

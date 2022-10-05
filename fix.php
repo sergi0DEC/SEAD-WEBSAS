@@ -1,29 +1,56 @@
 <?php
 session_start();
-
-require 'database.php';
-
+require_once "database.php";
 if (isset($_SESSION['user_id'])) {
-  $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
-  $records->bindParam(':id', $_SESSION['user_id']);
-  $records->execute();
-  $results = $records->fetch(PDO::FETCH_ASSOC);
+    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+    $records->bindParam(':id', $_SESSION['user_id']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
 
-  $user = null;
+    $user = null;
 
-  if (count($results) > 0) {
-  $user = $results;
+    if (count($results) > 0) {
+      $user = $results;
     }
-}
-$sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
-$query = mysqli_query($connn, $sql_fetch_todos);
-
+  }
+  $username = $_SESSION['user_id'];
+  $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
+  $query = mysqli_query($connn, $sql_fetch_todos);
 ?>
+
+
+<?php
+    if($_POST['name'] != null && $_POST['value'] != null){
+        $sql = "UPDATE product SET proname = '" . trim($_POST['name']) . "' ,amount = '" . trim($_POST['value']) . "' WHERE id = '" . $_POST['id'] . "'";
+        if($conn->query($sql)){
+            echo "<script>alert('Proceso completado exitósamente')</script>";
+            header("Refresh:0 , url =list.php");
+            exit();
+
+        }
+        else{
+            echo "<script>alert('Inconvenientes para realizar el proceso')</script>";
+            header("Refresh:0 , url =list.php");
+            exit();
+
+        }
+    }
+    else{
+    //    echo "<script>alert('Por favor diligencia todos los campos')</script>";
+    //    header("Refresh:0 , url = ../list.php");
+    //    exit();
+
+    }
+   // mysqli_close($connn);
+?>
+
+
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Agregar Producto</title>
+<meta charset="utf-8">
+    <title>Editar Inventario</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,9 +73,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <link href="css/style.css" rel="stylesheet">
     <link href="css/table-style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
-
+    
 </head>
-
 <body>
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -61,12 +87,12 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.php" class="nav-item nav-link ">Inicio</a>
+                <a href="pagina_principal.php" class="nav-item nav-link active">Inicio</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Inventario</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item active">Ver inventario</a>
+                        <a href="#" class="dropdown-item">Ver inventario</a>
                         <a href="404.php" class="dropdown-item">Agregar Producto </a>
                         <a href="404.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
@@ -90,12 +116,11 @@ $query = mysqli_query($connn, $sql_fetch_todos);
             <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
-    <!-- Barra de navegacion End -->
-    
-    <!-- <div class="header"></div> -->
+    <!-- Barra de navegacion End -->   
+
     <div class="container1">
-        <h1>Agregar Producto</h1>
-      <!--  <h2>Has accedido como <?//php echo $str = strtoupper($username) ?></h2>-->
+        <h1>Lista de Productos</h1>
+        <h2>Has accedido como <?php echo $str = strtoupper($username) ?></h2>
     </div>
     <div class="table-product">
         <table>
@@ -125,27 +150,29 @@ $query = mysqli_query($connn, $sql_fetch_todos);
             </tbody>
         </table>
         <br>
-        <div class="addproduct">
-            <form method="POST" action="addlist1.php">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre de Producto</label>
-                    <br>
-                    <input type="text" class="form-control" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Cantidad</label>
-                    <br>
-                    <input type="number" class="form-control" name="amount" required> </div> <br>
-                <div class="form-button">
-                    <button type="submit" class="modify" style="float:right">Agregar Producto</button>
-                    <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
-                </div>
-            </form>
-        </div>
+    </div>
+    <div class="fixproduct">
+        <form method="POST" action="fix.php">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Nombre del Producto</label>
+                <br>
+                <input type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Cantidad</label>
+                <br>
+                <input type="text" value="<?php echo $_GET['amount'] ?>" class="form-control" name="value" required>
+                <input type="hidden" value="<?php echo $_GET['id'] ?>" name="id" />
+            </div>
+            <br>
+            <div class="form-button">
+                <button type="submit" class="modify" style="float:right">Editar</button>
+                <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
+            </div>
+        </form>
     </div>
     <?php
     mysqli_close($connn);
     ?>
 </body>
-
 </html>

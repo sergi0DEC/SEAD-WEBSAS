@@ -123,7 +123,7 @@
                         <div class="service-item text-center pt-3">
                             <div class="p-4">
                                 <i class="fa fa-3x fa-check-square text-primary mb-4"></i>
-                                <h5 class="mb-3">Actividades</h5>
+                                <h5 class="mb-3">Productos</h5>
                             </div>
                         </div>
                     </a>
@@ -148,7 +148,7 @@
                     </div>
                     </a>
                 </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+             <!--   <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
@@ -180,7 +180,7 @@
                         </div>
                     </div>
                     </a>
-                </div>
+                </div>-->
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
