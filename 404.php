@@ -25,9 +25,7 @@
     <title>Página No Encontrada</title>
     <!--Meta datos-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="derivadas, matemáticas, curso, cálculo, diferencial, aprender, gratis" name="keywords">
-    <meta content="Sitio web “la DERIVADA”, el mejor curso gratuito para aprender cálculo diferencial." name="description">
-
+    
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,7 +92,7 @@
                         <?php if(!empty($user)): ?>
                             <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                      
                         <?php else: ?>
-                            <a href="login.php" class="dropdown-item">Acceder</a>
+                            <a href="index.php" class="dropdown-item">Acceder</a>
                         <?php endif; ?> 
                     </div>
                 </div>

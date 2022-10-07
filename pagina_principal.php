@@ -17,7 +17,6 @@
   }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +24,14 @@
     <meta charset="utf-8">
     <title>WEB-SAS</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
-    <!-- Fuentes Google Web -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!--Meta datos-->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="derivadas, matemáticas, curso, cálculo, diferencial, aprender, gratis" name="keywords">
+    <meta content="Sitio web “la DERIVADA”, el mejor curso gratuito para aprender cálculo diferencial." name="description">
+
+   <!-- Fuentes Google Web -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 
@@ -44,18 +49,16 @@
 
     <!-- Hoja de estilos CSS  -->
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
-    <!-- Spinner Start -->
+    <!-- Cargando Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
             <span class="sr-only">Cargando...</span>
         </div>
     </div>
-    <!-- Spinner End -->
-
+    <!-- Cargando End -->
 
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -89,7 +92,7 @@
                         </div>                   
                     </a>
                     <?php else: ?>
-                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
                     <?php endif; ?>
                     
                 </div>
@@ -99,8 +102,7 @@
     </nav>
     <!-- Barra de navegacion End -->
 
-
-    <!-- Herrmamientas Start -->
+    <!-- Herramientas Start -->
    
     <div class="container-xxl py-5">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -148,7 +150,7 @@
                     </div>
                     </a>
                 </div>
-             <!--   <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
@@ -180,7 +182,7 @@
                         </div>
                     </div>
                     </a>
-                </div>-->
+                </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
@@ -196,9 +198,7 @@
         </div>
     </div>
     <!-- Herramientas End -->
-
-
-
+     
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
@@ -219,9 +219,8 @@
     </div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
 
 
     <!-- JavaScript Libraries -->
@@ -236,4 +235,5 @@
     <script src="js/main.js"></script>
     <script src="js/inicio.js"></script>
 </body>
+
 </html>

@@ -50,6 +50,7 @@
 <head>
     <title>Cambiar contraseña</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,7 +114,7 @@
                         </div>                   
                     </a>
                     <?php else: ?>
-                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
                     <?php endif; ?>
                     
                 </div>
