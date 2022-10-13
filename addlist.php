@@ -48,6 +48,11 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <link href="css/table-style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
 
+    <!-- Links para el modal -->
+    <link rel="stylesheet" href="bootstrap4/css/bootstrap.min.css">	             
+    <link rel="stylesheet" href="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -98,8 +103,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         <h1>Agregar Producto</h1>
       <!--  <h2>Has accedido como <?//php echo $str = strtoupper($username) ?></h2>-->
     </div>
-    <div class="table-product">
-        <table>
+    <div>
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <thead class="thead-dark">
                 <tr>
                 <th scope="col">Orden</th>
@@ -127,7 +132,42 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </table>
         <br>
         <div class="addproduct">
-            <form method="POST" action="php/addlist1.php">
+            <div class="containerModal">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+                <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="php/addlist1.php">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="amount" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <!-- <form method="POST" action="php/addlist1.php">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nombre de Producto</label>
                     <br>
@@ -141,9 +181,14 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     <button type="submit" class="modify" style="float:right">Agregar Producto</button>
                     <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
                 </div>
-            </form>
+            </form> -->
         </div>
     </div>
+    <script src="../jquery/jquery-3.3.1.min.js"></script>	 	
+    <script src="../popper/popper.min.js"></script>	 	 	 
+    <script src="bootstrap4/js/bootstrap.min.js"></script>   	
+    <script src="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="codigo.js"></script> 	
     <?php
     mysqli_close($connn);
     ?>

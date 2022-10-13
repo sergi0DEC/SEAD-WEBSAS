@@ -104,8 +104,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <div class="container1">
         <h1>Inventario</h1>
     </div>
-    <div class="table-product">
-        <table>
+    <div >
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <tr>
                 <th scope="col">Orden</th>
                 <th scope="col">ID:Producto</th>

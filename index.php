@@ -3,7 +3,7 @@
   session_start();
 
   if (isset($_SESSION['user_id'])) {
-    header('Location: /SEAD-WEBSAS-php/pagina_principal.php');
+    header('Location: pagina_principal.php');
   }
   require 'database.php';
 
@@ -17,7 +17,7 @@
 
     if (count($results) > 0 && password_verify($_POST['password'], $results['password'])) {
       $_SESSION['user_id'] = $results['id'];
-      header("Location: /SEAD-WEBSAS-php/pagina_principal.php");
+      header("Location: pagina_principal.php");
     } else {
       $message = 'Las credenciales no coinciden, intente de nuevo.';
     }
