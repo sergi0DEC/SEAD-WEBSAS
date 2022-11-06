@@ -1,6 +1,7 @@
 <?php
-session_start();
 require_once "database.php";
+session_start();
+
 if (isset($_SESSION['user_id'])) {
     $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
     $records->bindParam(':id', $_SESSION['user_id']);
@@ -122,8 +123,28 @@ if (isset($_SESSION['user_id'])) {
         <h1>Lista de Productos</h1>
         <h2>Has accedido como <?php echo $str = strtoupper($username) ?></h2>
     </div>
+    <!-- Método para fix product -->
+    <div class="fixproduct">
+        <form method="POST" action="fix.php">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Nombre del Producto a editar</label>
+                <br>
+                <input style="border-top-style: solid;" type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Cantidad</label>
+                <br>
+                <input type="text" value="<?php echo $_GET['amount'] ?>" class="form-control" name="value" required>
+                <input type="hidden" value="<?php echo $_GET['id'] ?>" name="id" />
+            </div>
+            <br>
+            <div class="form-button">
+                <button type="submit" class="btn btn-warning"  style="margin-bottom: 100px; margin-left:700px" >Editar</button>
+            </div>
+        </form>
+    </div>
     <div class="table-product">
-        <table>
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <thead class="thead-dark">
                 <tr>
                 <th scope="col">Orden</th>
@@ -151,26 +172,10 @@ if (isset($_SESSION['user_id'])) {
         </table>
         <br>
     </div>
-    <div class="fixproduct">
-        <form method="POST" action="fix.php">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Nombre del Producto</label>
-                <br>
-                <input type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Cantidad</label>
-                <br>
-                <input type="text" value="<?php echo $_GET['amount'] ?>" class="form-control" name="value" required>
-                <input type="hidden" value="<?php echo $_GET['id'] ?>" name="id" />
-            </div>
-            <br>
-            <div class="form-button">
-                <button type="submit" class="modify" style="float:right">Editar</button>
-                <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
-            </div>
-        </form>
+    <div class="form-button">
+        <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
     </div>
+    
     <?php
     mysqli_close($connn);
     ?>

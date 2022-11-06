@@ -1,7 +1,8 @@
 <?php
+  
   session_start();
-
   require 'database.php';
+  
 
   if (isset($_SESSION['user_id'])) {
     $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
@@ -78,6 +79,16 @@
                         <a href="404.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Productos</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="productos.php" class="dropdown-item">Ver Lista de productos</a>
+                        <a href="productos.php" class="dropdown-item">Agregar Productos inventariables </a>
+                        <a href="productos.php" class="dropdown-item">Modificar Producto </a>
+                    </div>
+                </div>
+
                 <div class="nav-item dropdown">
                     <?php if(!empty($user)): ?>
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
@@ -119,7 +130,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <a href="404.php">
+                    <a href="productos.php">
                         <div class="service-item text-center pt-3">
                             <div class="p-4">
                                 <i class="fa fa-3x fa-check-square text-primary mb-4"></i>

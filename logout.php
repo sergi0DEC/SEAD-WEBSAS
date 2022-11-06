@@ -5,5 +5,7 @@
 
   session_destroy();
 
-  header('Location: /SEAD-WEBSAS-php/index.php');
+  // header('Location: /SEAD-WEBSAS-php/index.php');
+  
+  header('Location: index.php');
 ?>

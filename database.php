@@ -3,7 +3,7 @@
 $server = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'websas_database';
+$database = 'sas';
 
 try {
   $conn = new PDO("mysql:host=$server;dbname=$database;", $username, $password);
@@ -12,7 +12,7 @@ try {
 }
 
 $connn = new mysqli($server , $username, $password, $database);
-    mysqli_query($connn , "SET character_set_result=utf8");
+    mysqli_query($connn , "SET CHARACTER SET utf8");
     if($connn->connect_error){
         die("Database Error : " . $connn->connect_error);
     }

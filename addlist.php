@@ -1,7 +1,7 @@
 <?php
+require 'database.php';
 session_start();
 
-require 'database.php';
 
 if (isset($_SESSION['user_id'])) {
   $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
@@ -23,7 +23,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 <html lang="en">
 
 <head>
-    <title>Agregar Producto</title>
+    <title>Agregar Producto al Inventario</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,9 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <!--link iconos disponibles https://fontawesome.com/v4/icons/-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">  
+    <!-- JavaScript Bundle with Popper -->
     <!-- Hoja de estilos Libraries -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -46,6 +48,16 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <link href="css/style.css" rel="stylesheet">
     <link href="css/table-style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Links para el modal -->
+    <link rel="stylesheet" href="bootstrap4/css/bootstrap.min.css">	         
+      
+    <link rel="stylesheet" href="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.css">  
+      
+	<link rel="stylesheet" href="estilos.css">
+
 
 </head>
 
@@ -82,7 +94,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                         </div>                   
                     </a>
                     <?php else: ?>
-                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
                     <?php endif; ?>
                     
                 </div>
@@ -94,18 +106,19 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     
     <!-- <div class="header"></div> -->
     <div class="container1">
-        <h1>Agregar Producto</h1>
+        <h1>Agregar Productos</h1>
       <!--  <h2>Has accedido como <?//php echo $str = strtoupper($username) ?></h2>-->
     </div>
-    <div class="table-product">
-        <table>
-            <thead class="thead-dark">
+    <div>
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
+            <thead>
                 <tr>
                 <th scope="col">Orden</th>
                 <th scope="col">ID:Producto</th>
                 <th scope="col">Nombre:Producto</th>
                 <th scope="col">Cantidades</th>
                 <th scope="col">Fecha:Registro</th>
+                
                 </tr>
             </thead>
             <tbody>
@@ -126,26 +139,59 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </table>
         <br>
         <div class="addproduct">
-            <form method="POST" action="addlist1.php">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre de Producto</label>
-                    <br>
-                    <input type="text" class="form-control" name="name" required>
+            <!-- Programación del modal -->
+            <!-- Boton -->
+            <div class="containerModal">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+            <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="addlist1.php">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="amount" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button> -->
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Cantidad</label>
-                    <br>
-                    <input type="number" class="form-control" name="amount" required> </div> <br>
-                <div class="form-button">
-                    <button type="submit" class="modify" style="float:right">Agregar Producto</button>
-                    <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
-                </div>
-            </form>
+              </div>
+            </div>  
+
+    
         </div>
     </div>
+
+    <script src="../jquery/jquery-3.3.1.min.js"></script>	 	
+    <script src="../popper/popper.min.js"></script>	 	 	 
+    <script src="bootstrap4/js/bootstrap.min.js"></script>   	
+    <script src="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="codigo.js"></script> 	
     <?php
     mysqli_close($connn);
     ?>
-</body>
 
+    <!-- Links para el modal -->
+   
+</body>
 </html>

@@ -85,7 +85,7 @@
                         </div>                   
                     </a>
                     <?php else: ?>
-                        <a href="login.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
                     <?php endif; ?>
                     
                 </div>

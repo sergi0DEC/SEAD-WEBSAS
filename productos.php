@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
   $user = $results;
     }
 }
-$sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
+$sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
 ?>
@@ -87,6 +87,16 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                         <a href="404.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Productos</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="productos.php" class="dropdown-item">Ver Lista de productos</a>
+                        <a href="productos.php" class="dropdown-item">Agregar Productos inventariables </a>
+                        <a href="productos.php" class="dropdown-item">Modificar Producto </a>
+                    </div>
+                </div>
+
                 <div class="nav-item dropdown">
                     <?php if(!empty($user)): ?>
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
@@ -111,16 +121,15 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <!--inventario start-->
 
     <div >
-        <h1>Inventarios</h1>
+        <h1 style="text-align:center; margin-top:30px">Agregar productos al inventario prueba</h1>
     </div>
     <div>
-        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto; margin-top:70px">
             <tr>
-                <th scope="col">Orden</th>
-                <th scope="col">ID:Producto</th>
-                <th scope="col">Nombre:Producto</th>
-                <th scope="col">Cantidades</th>
-                <th scope="col">Fecha:Registro</th>
+                <th scope="col">ID Producto</th>
+                <th scope="col">Nombre Producto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Descripcion</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Eliminar</th>
             </tr>
@@ -129,29 +138,34 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                 $idpro = 1;
                 while ($row = mysqli_fetch_array($query)) { ?>
                     <tr>
-                        <td scope="row"><?php echo $idpro ?></td>
                         <td><?php echo $row['id'] ?></td>
-                        <td><?php echo $row['proname'] ?></td>
-                        <td><?php echo $row['amount'] ?></td>
-                        <td class="timeregis"><?php echo $row['time'] ?></td>
-                        <!-- <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php //echo $row['id'] ?>&message=<?php //echo $row['proname'] ?>&amount=<?php //echo $row['amount']; ?> " role="button"> --> 
-
+                        <td><?php echo $row['nombre'] ?></td>
+                        <td><?php echo $row['marca'] ?></td>
+                        <td><?php echo $row['descripcion'] ?></td>
                         <td class="modify1">    
                             <a type="button" class="btn btn-success"  style="float:right; margin-right: 80px;font-size: 20px;"
-                            href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?>" role="button">Editar</a>
-
-                            <!-- <?php //echo '<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal"data-whatever="@nombreDeUsuario'  . $row['id'] . '" id=' . $row['id'] . '" >Editar</button>' ?> -->
+                            href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['nombre'] ?>" role="button">Editar</a>
 
                         </td>
-                        <td class="delete"><a name="id" id="" class="bdelete" href="delete.php?id=<?php echo $row['id'] ?>" role="button">
+
+                        <script>
+                            function eliminar(){
+                            var respuesta=confirm("¿Desea eliminar el producto?");
+                            if(respuesta==true)
+                                window.location="deleteProduct.php?id=<?php echo $row['id'] ?>";
+                            else
+                                return 0;
+                            }
+                        </script>
+                        <td class="delete"><a name="id" id="" type="button" class="btn btn-danger" class="bdelete"  role="button" onclick='eliminar()'>
                                 Eliminar
-                            </a></td>
+                        </a></td>
                     </tr>
                 <?php
                     $idpro++;
                 } ?>
             </tbody>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -179,10 +193,56 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                   </div>
                 </div>
               </div>
-            </div>  
+            </div>   -->
         </table>
         <br>
-        <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a>
+        <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
+        <div class="addproduct">
+            <!-- Programación del modal -->
+            <!-- Boton -->
+            <div class="containerModal">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+            <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="addProduct.php">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="nombre" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="col-form-label">Marca</label>
+                        <input type="text" class="form-control" name="marca" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="col-form-label">Descripcion</label>
+                        <input type="text" class="form-control" name="descripcion" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>  
+
+    
+        </div>
     </div>
     <?php
     mysqli_close($connn);
@@ -191,7 +251,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <br><br><br>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -300px;">
         <div class="container">
             <div class="copyright">
                 <div class="row">
