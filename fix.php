@@ -116,26 +116,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </form>
     </div>
-    <!-- Método para fix product -->
-    <div class="fixproduct">
-        <form method="POST" action="fix.php">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Nombre del Producto a editar</label>
-                <br>
-                <input style="border-top-style: solid;" type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Cantidad</label>
-                <br>
-                <input type="text" value="<?php echo $_GET['amount'] ?>" class="form-control" name="value" required>
-                <input type="hidden" value="<?php echo $_GET['id'] ?>" name="id" />
-            </div>
-            <br>
-            <div class="form-button">
-                <button type="submit" class="btn btn-warning"  style="margin-bottom: 100px; margin-left:700px" >Editar</button>
-            </div>
-        </form>
-    </div>
+
     <div class="table-product">
         <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <thead class="thead-dark">
