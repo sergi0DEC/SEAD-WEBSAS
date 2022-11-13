@@ -1,11 +1,11 @@
 <?php
-
+require 'database.php';
   session_start();
 
   if (isset($_SESSION['user_id'])) {
     header('Location: pagina_principal.php');
   }
-  require 'database.php';
+  
 
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $records = $conn->prepare('SELECT id, email, password FROM users WHERE email = :email');

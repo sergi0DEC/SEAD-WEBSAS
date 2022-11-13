@@ -19,6 +19,9 @@ $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
 ?>
+
+<!-- MEtodo del fix -->
+
 <!doctype html>
 <html lang="en">
 
@@ -35,6 +38,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <!--link iconos disponibles https://fontawesome.com/v4/icons/-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">  
+
 
     <!-- Hoja de estilos Libraries -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -47,6 +52,11 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <link href="css/style.css" rel="stylesheet">
     <link href="css/table-style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
+
+    <!-- links para el modal -->
+    <link rel="stylesheet" href="bootstrap4/css/bootstrap.min.css">	         
+      
+    <link rel="stylesheet" href="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.css">
 </head>
 <body>
     <!-- Cargando Start -->
@@ -101,10 +111,10 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 
     <!--inventario start-->
 
-    <div class="container1">
-        <h1>Inventario</h1>
-    </div>
     <div >
+        <h1 style="text-align: center;">Inventarios</h1>
+    </div>
+    <div>
         <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <tr>
                 <th scope="col">Orden</th>
@@ -125,9 +135,16 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                         <td><?php echo $row['proname'] ?></td>
                         <td><?php echo $row['amount'] ?></td>
                         <td class="timeregis"><?php echo $row['time'] ?></td>
-                        <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button">
-                                Editar
-                            </a></td>
+                        <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button"> 
+                        Editar  
+
+                        <!-- <td class="modify1">    
+                            <a type="button" class="btn btn-success"  style="float:right; margin-right: 80px;font-size: 20px;"
+                            href="fix.php?id=<?php //echo $row['id'] ?>&message=<?php //echo $row['proname'] ?>&amount=<?php //echo $row['amount']; ?>" role="button">Editar</a>
+
+                            <?php //echo '<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal"data-whatever="@nombreDeUsuario'  . $row['id'] . '" id=' . $row['id'] . '" >Editar</button>' ?> -->
+
+                        </td>
                         <td class="delete"><a name="id" id="" class="bdelete" href="delete.php?id=<?php echo $row['id'] ?>" role="button">
                                 Eliminar
                             </a></td>
@@ -136,16 +153,20 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     $idpro++;
                 } ?>
             </tbody>
+
+            
+            
         </table>
         <br>
-        <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a>
-
-        <!-- Boton agregar de adrian        -->
+        <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
         <div class="addproduct">
+            <!-- Programación del modal -->
+            <!-- Boton -->
             <div class="containerModal">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
-                <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+            <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
             </div>
+
 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -160,8 +181,23 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     <form method="POST" action="php/addlist1.php">
                       <div class="form-group">
                         <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="name" required>
-                      </div>
+                        <!-- <input type="text" class="form-control" id="recipient-name" name="name" required> -->
+                        <select name="name" id="">
+                            <option value="0">Seleccione</option>
+                            
+                                <?php
+                                    
+                                    $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
+                                    $query = mysqli_query($connn, $sql_fetch_todos);
+                                    
+                                    while($row = mysqli_fetch_array($query)){
+                                       echo '<option value="'.$row['nombre'].'">'.$row['nombre'].'</option>';
+
+                                    }
+                                ?>
+
+                        </select>  
+                    </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
                         <input type="number" class="form-control" name="amount" required>
@@ -177,25 +213,6 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                 </div>
               </div>
             </div>  
-            <!-- <form method="POST" action="php/addlist1.php">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre de Producto</label>
-                    <br>
-                    <input type="text" class="form-control" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Cantidad</label>
-                    <br>
-                    <input type="number" class="form-control" name="amount" required> </div> <br>
-                <div class="form-button">
-                    <button type="submit" class="modify" style="float:right">Agregar Producto</button>
-                    <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
-                </div>
-            </form> -->
-        </div>
-
-
-
     </div>
     <?php
     mysqli_close($connn);
@@ -237,6 +254,11 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="../jquery/jquery-3.3.1.min.js"></script>	 	
+    <script src="../popper/popper.min.js"></script>	 	 	 
+    <script src="bootstrap4/js/bootstrap.min.js"></script>   	
+    <script src="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="codigo.js"></script> 	
     <script src="js/main.js"></script>
 
     <!-- Add button Libraries             -->

@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"name": "SEAD-WEBSAS",
+			"path": "."
+		},
+		{
+			"name": "jqueryUI",
+			"path": "../../../../Users/adrian/Desktop/Modalesmio/jqueryUI"
+		},
+		{
+			"name": "popper",
+			"path": "../../../../Users/adrian/Desktop/Modalesmio/popper"
+		},
+		{
+			"name": "bootstrap4",
+			"path": "../../../../Users/adrian/Desktop/Modalesmio/bootstrap4"
+		},
+		{
+			"name": "jquery",
+			"path": "../../../../Users/adrian/Desktop/Modalesmio/jquery"
+		}
+	],
+	"settings": {}
+}
