@@ -76,7 +76,7 @@
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">INICIAR SESIÓN</h6>
-                <h1 class="mb-5 text-center">Bienvenido 28/9</h1>
+                <h1 class="mb-5 text-center">Bienvenido</h1>
             </div>
             <div class="row mb-5 text-center align-items-center justify-content-center">
                 
@@ -95,15 +95,15 @@
                                     <label for="password">Contraseña</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <!--
                                 <button class="btn btn-primary w-100 py-3" type="submit" name = "accede" value="iniciar_sesion" id="boton" onclick="login()" onsubmit="login()">Acceder</button>
                                 -->
                                 <input class="btn btn-primary w-100 py-3" type="submit" value="Enviar"></input>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <a href="signup.php" class="btn btn-secondary w-100 py-3">Crear Cuenta</a>
-                            </div>
+                            </div> -->
                         </div>
                     </form>
                 </div>

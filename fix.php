@@ -66,9 +66,9 @@ if (isset($_SESSION['user_id'])) {
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Ver inventario</a>
-                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
+                        <a href="list.php" class="dropdown-item">Ver inventario</a>
+                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
+                        <a href="fix.php" class="dropdown-item active">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">

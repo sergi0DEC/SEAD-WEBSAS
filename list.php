@@ -4,7 +4,7 @@ session_start();
 require 'database.php';
 
 if (isset($_SESSION['user_id'])) {
-  $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+  $records = $conn->prepare('SELECT id, email, name, password, rol FROM users WHERE id = :id');
   $records->bindParam(':id', $_SESSION['user_id']);
   $records->execute();
   $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -74,8 +74,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="list.php" class="dropdown-item active">Ver inventario</a>
-                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
+                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
+                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -139,6 +139,63 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </table>
         <br>
         <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a>
+
+        <!-- Boton agregar de adrian        -->
+        <div class="addproduct">
+            <div class="containerModal">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+                <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="php/addlist1.php">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="amount" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <!-- <form method="POST" action="php/addlist1.php">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nombre de Producto</label>
+                    <br>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Cantidad</label>
+                    <br>
+                    <input type="number" class="form-control" name="amount" required> </div> <br>
+                <div class="form-button">
+                    <button type="submit" class="modify" style="float:right">Agregar Producto</button>
+                    <a name="" id="" class="return" href="list.php" role="button" style="float:left">Volver</a>
+                </div>
+            </form> -->
+        </div>
+
+
+
     </div>
     <?php
     mysqli_close($connn);
@@ -181,6 +238,14 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Add button Libraries             -->
+    <script src="../jquery/jquery-3.3.1.min.js"></script>	 	
+    <script src="../popper/popper.min.js"></script>	 	 	 
+    <script src="bootstrap4/js/bootstrap.min.js"></script>   	
+    <script src="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="codigo.js"></script> 	
+
 
 </body>
 

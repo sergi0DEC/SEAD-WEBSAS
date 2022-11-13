@@ -49,7 +49,8 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
 
     <!-- Links para el modal -->
-    <link rel="stylesheet" href="bootstrap4/css/bootstrap.min.css">	             
+                            <!-- Esta linea cambia el estilo  -->
+    <link rel="stylesheet" href="bootstrap4/css/bootstrap.min.css">	          
     <link rel="stylesheet" href="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.css"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -72,9 +73,9 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item active">Ver inventario</a>
-                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
+                       <a href="list.php" class="dropdown-item">Ver inventario</a>
+                        <a href="addlist.php" class="dropdown-item active">Agregar Producto </a>
+                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">

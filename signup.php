@@ -10,17 +10,18 @@
   $message = '';
 
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
-    $sql = "INSERT INTO users (email, name,password) VALUES (:email,:name, :password)";
+    $sql = "INSERT INTO users (email, name,password,rol) VALUES (:email,:name, :password,:rol)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':email', $_POST['email']);
     $stmt->bindParam(':name', $_POST['name']);
+    $stmt->bindParam(':rol', $_POST['rol']);
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $stmt->bindParam(':password', $password);
 
     if ($stmt->execute()) {
       //$message = 'Usuario creado exitosamente';
       function_alert("¡Usuario creado exitosamente!");
-      header("Refresh:0 , url = index.php");
+      header("Refresh:0 , url = users.php");
       exit();
     } else {
       $message = 'Lo siento, hubo un error al intentar crear su cuenta';
@@ -89,7 +90,7 @@
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Crear Cuenta </h6>
-                <h1 class="mb-5">Ingresa tus datos</h1>
+                <h1 class="mb-5">Ingresa los datos del nuevo usuario</h1>
             </div>
             <div class="row mb-5 text-center align-items-center justify-content-center">            
                 <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
@@ -109,6 +110,12 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
+                                    <input name="rol" type="number" min=1 max=3 class="form-control" id="rol" placeholder="Enter your Rol" required>
+                                    <label for="Rol">Rol</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
                                     <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
                                     <label for="password">Contraseña</label>
                                 </div>
@@ -120,12 +127,12 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Registrarme</button>
+                                <button class="btn btn-primary w-100 py-3" type="submit">Registrar Usuario</button>
                                 <p class="warnings" id="warnings"></p>
                             </div>
                             <div class="col-md-12">
-                                <h6 class="mb-4">¿Ya tienes cuenta?</h6>
-                                <a href="index.php" class="btn btn-secondary w-100 py-3">Iniciar sesión</a>
+                                <!-- <h6 class="mb-4">¿Ya tienes cuenta?</h6> -->
+                                <a href="users.php" class="btn btn-secondary w-100 py-3">Volver</a>
                             </div>
                         </div>
                     </form>

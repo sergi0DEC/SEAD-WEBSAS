@@ -4,7 +4,7 @@
   require 'database.php';
 
   if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+    $records = $conn->prepare('SELECT id, email, name, password, rol FROM users WHERE id = :id');
     $records->bindParam(':id', $_SESSION['user_id']);
     $records->execute();
     $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -76,17 +76,19 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Ver inventario</a>
-                        <a href="404.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="404.php" class="dropdown-item">Modificar Inventario </a>
+                        <a href="list.php" class="dropdown-item">Ver inventario</a>                        
+                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
+                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <?php if(!empty($user)): ?>
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
                         <div class="dropdown-menu fade-down m-0">
-                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>  
-                            <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
+                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>
+                            <?php if( $user['rol'] == 1):  ?> 
+                                <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
+                            <?php endif; ?>
                             <a href="#" class="dropdown-item">Ajustes</a>
                             <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
                         </div>                   
@@ -97,7 +99,7 @@
                     
                 </div>
             </div>
-            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nuevo Producto<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Barra de navegacion End -->
@@ -131,14 +133,26 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <a href="404.php">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-users text-primary mb-4"></i>
-                            <h5 class="mb-3">Usuarios</h5>
+                    <?php if( $user['rol'] == 1):  ?> 
+                        <a href="users.php">
+                        <div class="service-item text-center pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-users text-primary mb-4"></i>
+                                <h5 class="mb-3">Usuarios</h5>
+                            </div>
                         </div>
-                    </div>
-                    </a>
+                        </a>
+                    <?php else: ?>
+                        <a href="my-account.php">
+                        <div class="service-item text-center pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-users text-primary mb-4"></i>
+                                <h5 class="mb-3">Mi cuenta</h5>
+                            </div>
+                        </div>
+                        </a>
+                    <?php endif; ?>
+                    
                 </div>
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
                     <a href="404.php">
@@ -161,7 +175,7 @@
                     </div>
                     </a>
                 </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+               <!-- <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
@@ -193,7 +207,7 @@
                         </div>
                     </div>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

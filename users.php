@@ -1,54 +1,29 @@
 <?php
-    function function_alert($message) {
-      
-        // Display the alert box 
-        echo "<script>alert('$message');</script>";
+session_start();
+
+require 'database.php';
+
+if (isset($_SESSION['user_id'])) {
+  $records = $conn->prepare('SELECT id, email, name, password, rol FROM users WHERE id = :id');
+  $records->bindParam(':id', $_SESSION['user_id']);
+  $records->execute();
+  $results = $records->fetch(PDO::FETCH_ASSOC);
+
+  $user = null;
+
+  if (count($results) > 0) {
+  $user = $results;
     }
-  session_start();
+}
+$sql_fetch_todos = "SELECT * FROM users ORDER BY id ASC";
+$query = mysqli_query($connn, $sql_fetch_todos);
 
-  require 'database.php';
-
-  if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
-    $records->bindParam(':id', $_SESSION['user_id']);
-    $records->execute();
-    $results = $records->fetch(PDO::FETCH_ASSOC);
-
-    $user = null;
-
-    if (count($results) > 0) {
-      $user = $results;
-    }
-    $id=$_SESSION['user_id'];
-
-    $message = '';
-
-    if (!empty($_POST['password']) && !empty($_POST['new_password'])) {
-        if(password_verify($_POST['password'], $results['password'])){
-            $sql = "UPDATE users SET password=:new_password WHERE id=$id";
-            $stmt = $conn->prepare($sql);
-            $npassword = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
-            $stmt->bindParam(':new_password', $npassword);
-
-            if ($stmt->execute()) {
-                function_alert("Contraseña cambiada con exito");               
-                header("Refresh:0 , url = my-account.php");
-            } else {
-            $message = 'Lo siento, hubo un error al intentar modificar tu contraseña';
-            }
-        }else{
-            $message = 'La contraseña actual no coincide';
-        }  
-    }
-  }
-
-  
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <title>Cambiar contraseña</title>
+    <title>Usuarios</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Fuentes Google Web -->
@@ -70,8 +45,9 @@
 
     <!-- Hoja de estilos CSS  -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/table-style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <!-- Cargando Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -80,7 +56,6 @@
         </div>
     </div>
     <!-- Cargando End -->
-
 
     <!-- Barra Navegación Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -93,28 +68,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.php" class="nav-item nav-link">Inicio</a>
+                <a href="pagina_principal.php" class="nav-item nav-link ">Inicio</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Inventario</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item">Ver inventario</a>
+                        <a href="list.php" class="dropdown-item active">Ver inventario</a>
                         <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
                         <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <?php if(!empty($user)): ?>
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
                         <div class="dropdown-menu fade-down m-0">
-                            <a href="my-account.php" class="dropdown-item active">Mi cuenta</a>  
+                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>  
                             <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
                             <a href="#" class="dropdown-item">Ajustes</a>
                             <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
                         </div>                   
                     </a>
                     <?php else: ?>
-                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
+                        <a href="list.php" class="nav-item nav-link ">Iniciar Sesión</a>
                     <?php endif; ?>
                     
                 </div>
@@ -124,56 +99,59 @@
     </nav>
     <!-- Barra de navegacion End -->
 
-    <!--Mensaje start-->
-    <?php if(!empty($message)): ?>
-      <h3> <?= $message ?></h3>
-    <?php endif; ?>
-    <!--Mensaje end-->
+    <!--inventario start-->
 
-    <!-- modificar Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="mb-5">Cambiar contraseña</h1>
-            </div>
-            <div class="row mb-5 text-center align-items-center justify-content-center">            
-                <div class="col-lg-4 col-md-12">
-
-                    <form action="change-pass.php" method="POST">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                                    <label for="password">Contraseña Actual</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input name="new_password" type="password" class="form-control" placeholder="New password" id="new_password" required>
-                                    <label for="new_password">Nueva Contraseña</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input name="confirm_password" type="password" class="form-control" placeholder="Confirm password" id="repassword" required>
-                                    <label for="repassword">Repite la nueva Contraseña</label>
-                                </div>
-                            </div>            
-                            <div class="col-6">
-                                <input class="btn btn-primary w-100 py-3" type="submit" value="Cambiar Contraseña"></input>
-                            </div>  
-                            <div class="col-6">
-                                <a href="my-account-edit.php" class="btn btn-secondary w-100 py-3">Volver</a>
-                            </div>  
-                        </div>  
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="container1">
+        <h1>Usuarios</h1>
     </div>
-    <!-- modificar End -->
+    <div >
+        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
+            <tr>
+                <!-- <th scope="col">Orden</th> -->
+                <th scope="col">ID:Usuario</th>
+                <th scope="col">EMAIL:Usuario</th>
+                <th scope="col">NOMBRE: Usuario</th>
+                <th scope="col">ROL: Usuario</th>
+                <!-- <th scope="col">Editar</th> -->
+                <th scope="col">Acción</th>
+            </tr>
+            <tbody>
+                <?php
+                $idpro = 1;
+                while ($row = mysqli_fetch_array($query)) { ?>
+                    <tr>
+                        <!-- <td scope="row"><?php echo $idpro ?></td> -->
+                        <td><?php echo $row['id'] ?></td>
+                        <td><?php echo $row['email'] ?></td>
+                        <td><?php echo $row['name'] ?></td>
+                        <td><?php echo $row['rol'] ?></td>
+                        <!-- <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button">
+                                Editar
+                            </a></td> -->
+                        <?php if( $row['rol'] == 1):  ?> 
+                            <td class="modify1"><a name="edit" id="" class="bfix" href="my-account.php" role="button">Editar</a></td>
+                        <?php else: ?>
+                            <td class="delete"><a name="id" id="" class="bdelete" href="php/delete-user.php?id=<?php echo $row['id'] ?>" role="button">Eliminar</a></td>
+                        <?php endif; ?>
 
-     
+                    </tr>
+                <?php
+                    $idpro++;
+                } ?>
+            </tbody>
+        </table>
+        <br>
+        <a name="" id="" class="Addlist" style="float:right" href="signup.php" role="button">Agregar Usuario</a>
+        <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+
+
+    </div>
+    <?php
+    mysqli_close($connn);
+    ?>
+    <!--usuarios end-->
+    <br><br><br>
+
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
@@ -209,6 +187,15 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Add button Libraries             -->
+    <script src="../jquery/jquery-3.3.1.min.js"></script>	 	
+    <script src="../popper/popper.min.js"></script>	 	 	 
+    <script src="bootstrap4/js/bootstrap.min.js"></script>   	
+    <script src="jqueryUI/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="codigo.js"></script> 	
+
+
 </body>
 
 </html>
