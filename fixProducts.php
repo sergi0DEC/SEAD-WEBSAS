@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     }
   }
   $username = $_SESSION['user_id'];
-  $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
+  $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
   $query = mysqli_query($connn, $sql_fetch_todos);
 ?>
 
@@ -105,10 +105,15 @@ if (isset($_SESSION['user_id'])) {
                 <input style="border-top-style: solid;" type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Cantidad</label>
+                <label for="exampleInputPassword1">Marca</label>
                 <br>
-                <input type="text" value="<?php echo $_GET['amount'] ?>" class="form-control" name="value" required>
+                <input type="text" value="<?php echo $_GET['marca'] ?>" class="form-control" name="marca" required>
                 <input type="hidden" value="<?php echo $_GET['id'] ?>" name="id" />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Descripcion del producto</label>
+                <br>
+                <input style="border-top-style: solid;" type="text" class="form-control" name="descripcion" value="<?php echo $_GET['descripcion']; ?>" required>
             </div>
             <br>
             <div class="form-button">
@@ -122,10 +127,11 @@ if (isset($_SESSION['user_id'])) {
             <thead class="thead-dark">
                 <tr>
                 <th scope="col">Orden</th>
-                <th scope="col">ID:Producto</th>
-                <th scope="col">Nombre:Producto</th>
-                <th scope="col">Cantidades</th>
-                <th scope="col">Fecha:Registro</th>
+                <th scope="col">ID Producto</th>
+                <th scope="col">Nombre Producto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Descripcion</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -133,11 +139,11 @@ if (isset($_SESSION['user_id'])) {
                 $idpro = 1;
                 while ($row = mysqli_fetch_array($query)) { ?>
                     <tr>
-                        <td scope="row"><?php echo $idpro ?></td>
+                    <td scope="row"><?php echo $idpro ?></td>
                         <td><?php echo $row['id'] ?></td>
-                        <td><?php echo $row['proname'] ?></td>
-                        <td><?php echo $row['amount'] ?></td>
-                        <td class="timeregis"><?php echo $row['time'] ?></td>
+                        <td><?php echo $row['nombre'] ?></td>
+                        <td><?php echo $row['marca'] ?></td>
+                        <td><?php echo $row['descripcion'] ?></td>
                     </tr>
                 <?php
                     $idpro++;

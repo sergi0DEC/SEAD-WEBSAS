@@ -112,7 +112,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <!--inventario start-->
 
     <div >
-        <h1>Inventarios</h1>
+        <h1 style="text-align: center;">Inventarios</h1>
     </div>
     <div>
         <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
@@ -135,13 +135,14 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                         <td><?php echo $row['proname'] ?></td>
                         <td><?php echo $row['amount'] ?></td>
                         <td class="timeregis"><?php echo $row['time'] ?></td>
-                        <!-- <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php //echo $row['id'] ?>&message=<?php //echo $row['proname'] ?>&amount=<?php //echo $row['amount']; ?> " role="button"> --> 
+                        <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button"> 
+                        Editar  
 
-                        <td class="modify1">    
+                        <!-- <td class="modify1">    
                             <a type="button" class="btn btn-success"  style="float:right; margin-right: 80px;font-size: 20px;"
-                            href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?>" role="button">Editar</a>
+                            href="fix.php?id=<?php //echo $row['id'] ?>&message=<?php //echo $row['proname'] ?>&amount=<?php //echo $row['amount']; ?>" role="button">Editar</a>
 
-                            <!-- <?php //echo '<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal"data-whatever="@nombreDeUsuario'  . $row['id'] . '" id=' . $row['id'] . '" >Editar</button>' ?> -->
+                            <?php //echo '<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal"data-whatever="@nombreDeUsuario'  . $row['id'] . '" id=' . $row['id'] . '" >Editar</button>' ?> -->
 
                         </td>
                         <td class="delete"><a name="id" id="" class="bdelete" href="delete.php?id=<?php echo $row['id'] ?>" role="button">
@@ -152,38 +153,66 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     $idpro++;
                 } ?>
             </tbody>
+
+            
+            
+        </table>
+        <br>
+        <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
+        <div class="addproduct">
+            <!-- Programación del modal -->
+            <!-- Boton -->
+            <div class="containerModal">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
+            <a name="" id="" class="btn btn-warning" href="list.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            </div>
+
+
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form method="POST" action="fix.php">
+                    <form method="POST" action="php/addlist1.php">
                       <div class="form-group">
                         <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
-                        <input type="text" class="form-control" name="name" value='<?php echo  $row['proname'] ;?>' required>
-                      </div>
+                        <!-- <input type="text" class="form-control" id="recipient-name" name="name" required> -->
+                        <select name="name" id="">
+                            <option value="0">Seleccione</option>
+                            
+                                <?php
+                                    
+                                    $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
+                                    $query = mysqli_query($connn, $sql_fetch_todos);
+                                    
+                                    while($row = mysqli_fetch_array($query)){
+                                       echo '<option value="'.$row['nombre'].'">'.$row['nombre'].'</option>';
+
+                                    }
+                                ?>
+
+                        </select>  
+                    </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
-                        <input type="text" class="form-control" name="value" value="<?php echo $_GET['id'] ?>">
-                        
+                        <input type="number" class="form-control" name="amount" required>
                       </div>
                       <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
                     </form>
                   </div>
                   <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button> -->
                   </div>
                 </div>
               </div>
             </div>  
-        </table>
-        <br>
-        <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a>
     </div>
     <?php
     mysqli_close($connn);

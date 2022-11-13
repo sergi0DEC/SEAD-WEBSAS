@@ -126,6 +126,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <div>
         <table class="table table-striped table-dark" style="width:90%; margin: 0 auto; margin-top:70px">
             <tr>
+                <th scope="col">Orden</th>
                 <th scope="col">ID Producto</th>
                 <th scope="col">Nombre Producto</th>
                 <th scope="col">Marca</th>
@@ -138,26 +139,27 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                 $idpro = 1;
                 while ($row = mysqli_fetch_array($query)) { ?>
                     <tr>
+                        <td scope="row"><?php echo $idpro ?></td>
                         <td><?php echo $row['id'] ?></td>
                         <td><?php echo $row['nombre'] ?></td>
                         <td><?php echo $row['marca'] ?></td>
                         <td><?php echo $row['descripcion'] ?></td>
                         <td class="modify1">    
                             <a type="button" class="btn btn-success"  style="float:right; margin-right: 80px;font-size: 20px;"
-                            href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['nombre'] ?>" role="button">Editar</a>
+                            href="fixProducts.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['nombre'] ?>&marca=<?php echo $row['marca'];?>&descripcion=<?php echo $row['descripcion'];?>" role="button">Editar</a>
 
                         </td>
 
                         <script>
-                            function eliminar(){
+                            function eliminar(prueba){
                             var respuesta=confirm("¿Desea eliminar el producto?");
                             if(respuesta==true)
-                                window.location="deleteProduct.php?id=<?php echo $row['id'] ?>";
+                                window.location=prueba;
                             else
                                 return 0;
                             }
                         </script>
-                        <td class="delete"><a name="id" id="" type="button" class="btn btn-danger" class="bdelete"  role="button" onclick='eliminar()'>
+                        <td class="delete"><a name="id" id="" type="button" class="btn btn-danger" class="bdelete"  role="button"  onclick="eliminar('deleteProduct.php?id=<?php echo $row['id'] ?>')">
                                 Eliminar
                         </a></td>
                     </tr>
@@ -165,35 +167,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                     $idpro++;
                 } ?>
             </tbody>
-            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form method="POST" action="fix.php">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
-                        <input type="text" class="form-control" name="name" value='<?php echo  $row['proname'] ;?>' required>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
-                        <input type="text" class="form-control" name="value" value="<?php echo $_GET['id'] ?>">
-                        
-                      </div>
-                      <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                  </div>
-                </div>
-              </div>
-            </div>   -->
+
         </table>
         <br>
         <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
@@ -220,6 +194,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                       <div class="form-group">
                         <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
                         <input type="text" class="form-control" id="recipient-name" name="nombre" required>
+                        
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1" class="col-form-label">Marca</label>
