@@ -56,50 +56,7 @@
     <!-- Cargando End -->
 
     <!-- Barra Navegación Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img src="media/icono.ico" alt="" height="46">
-            <h2 class="m-2 text-primary">WEB-SAS</h2>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.php" class="nav-item nav-link active">Inicio</a>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item">Ver inventario</a>
-                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Ajustes</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Elementos</a>
-                        <a href="#" class="dropdown-item">Acerca de..</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cuenta</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Gestionar Cuenta </a>
-                        <a href="#" class="dropdown-item">Agregar Cuenta</a>
-                        <?php if(!empty($user)): ?>
-                            <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                      
-                        <?php else: ?>
-                            <a href="index.php" class="dropdown-item">Acceder</a>
-                        <?php endif; ?> 
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
+    <?php require('navbar.php')?>
     <!-- Barra de navegacion End -->
 
     <!-- sesion start-->

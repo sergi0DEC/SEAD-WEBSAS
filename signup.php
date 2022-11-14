@@ -132,7 +132,7 @@
                             </div>
                             <div class="col-md-12">
                                 <!-- <h6 class="mb-4">¿Ya tienes cuenta?</h6> -->
-                                <a href="users.php" class="btn btn-secondary w-100 py-3">Volver</a>
+                                <a onclick="history.back()" class="btn btn-secondary w-100 py-3">Volver</a>
                             </div>
                         </div>
                     </form>

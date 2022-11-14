@@ -144,6 +144,7 @@ tr:nth-child(even) {
     color: white;
 }
 .delete .bdelete {
+    text-align: right;
     border-radius: 15px;
     background-color: #e60000;
     text-decoration: none;

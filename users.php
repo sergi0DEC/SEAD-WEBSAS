@@ -99,11 +99,23 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     </nav>
     <!-- Barra de navegacion End -->
 
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white animated slideInDown">Usuarios</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
     <!--inventario start-->
 
-    <div class="container1">
+    <!-- <div class="container1">
         <h1>Usuarios</h1>
-    </div>
+    </div> -->
     <div >
         <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
             <tr>
@@ -129,7 +141,11 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                                 Editar
                             </a></td> -->
                         <?php if( $row['rol'] == 1):  ?> 
-                            <td class="modify1"><a name="edit" id="" class="bfix" href="my-account.php" role="button">Editar</a></td>
+                            <?php if( $row['id']== $user['id']):  ?> 
+                                <td class="modify1"><a name="edit" id="" class="bfix" href="my-account.php" role="button">Editar</a></td>
+                            <?php else: ?>
+                                <td>    Administrador</td>
+                            <?php endif; ?>
                         <?php else: ?>
                             <td class="delete"><a name="id" id="" class="bdelete" href="php/delete-user.php?id=<?php echo $row['id'] ?>" role="button">Eliminar</a></td>
                         <?php endif; ?>
@@ -142,7 +158,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </table>
         <br>
         <a name="" id="" class="Addlist" style="float:right" href="signup.php" role="button">Agregar Usuario</a>
-        <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+        <a name="" id="" class="btn btn-warning" onclick="history.back()" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
 
 
     </div>

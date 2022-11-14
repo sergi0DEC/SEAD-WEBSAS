@@ -28,9 +28,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!--Meta datos-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="derivadas, matemáticas, curso, cálculo, diferencial, aprender, gratis" name="keywords">
-    <meta content="Sitio web “la DERIVADA”, el mejor curso gratuito para aprender cálculo diferencial." name="description">
-
    <!-- Fuentes Google Web -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,57 +59,7 @@
     <!-- Cargando End -->
 
     <!-- Barra Navegación Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="pagina_principal.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img src="media/icono.ico" alt="" height="46">
-            <h2 class="m-2 text-primary">WEB-SAS</h2>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.php" class="nav-item nav-link active">Inicio</a>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inventario</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item">Ver inventario</a>                        
-                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Productos</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="productos.php" class="dropdown-item">Ver Lista de productos</a>
-                        <a href="productos.php" class="dropdown-item">Agregar Productos inventariables </a>
-                        <a href="productos.php" class="dropdown-item">Modificar Producto </a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <?php if(!empty($user)): ?>
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
-                        <div class="dropdown-menu fade-down m-0">
-                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>
-                            <?php if( $user['rol'] == 1):  ?> 
-                                <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
-                            <?php endif; ?>
-                            <a href="#" class="dropdown-item">Ajustes</a>
-                            <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
-                        </div>                   
-                    </a>
-                    <?php else: ?>
-                        <a href="index.php" class="nav-item nav-link ">Iniciar Sesión</a>
-                    <?php endif; ?>
-                    
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nuevo Producto<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
+    <?php require('navbar.php')?>
     <!-- Barra de navegacion End -->
 
     <!-- Herramientas Start -->
