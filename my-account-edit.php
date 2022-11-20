@@ -22,6 +22,7 @@
     $id=$_SESSION['user_id'];
   }else{
     header('Location: index.php');
+    exit();
   }
 
   $message = '';
@@ -32,9 +33,9 @@
     $stmt->bindParam(':email', $_POST['email']);
     $stmt->bindParam(':name', $_POST['name']);
 
-    if ($stmt->execute()) {
-        function_alert("Datos modificados con exito");
+    if ($stmt->execute()) {     
         header("Refresh:0 , url = my-account.php");
+        function_alert("Datos modificados con exito");
     } else {
       $message = 'Lo siento, hubo un error al intentar modificar tus datos';
     }
@@ -108,7 +109,7 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input value=<?= $user['email']; ?> name="email" type="text" class="form-control" id="email" placeholder="Enter your Email" required>
-                                    <label for="email">Correo Electrónico</label>
+                                    <label for="email">Usuario</label>
                                 </div>
                             </div>
                             <div class="col-12">

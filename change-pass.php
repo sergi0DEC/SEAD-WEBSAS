@@ -30,9 +30,10 @@
             $npassword = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
             $stmt->bindParam(':new_password', $npassword);
 
-            if ($stmt->execute()) {
-                function_alert("Contraseña cambiada con exito");               
+            if ($stmt->execute()) {                     
                 header("Refresh:0 , url = my-account.php");
+                function_alert("Contraseña cambiada con exito"); 
+                exit();
             } else {
             $message = 'Lo siento, hubo un error al intentar modificar tu contraseña';
             }
@@ -42,6 +43,7 @@
     }
   }else{
     header('Location: index.php');
+    exit();
   }
 
   

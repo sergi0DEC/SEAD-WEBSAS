@@ -87,7 +87,7 @@ require 'database.php';
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input name="email" type="text" class="form-control" placeholder="Your Email" required>
-                                    <label for="email">Correo Electrónico</label>
+                                    <label for="email">Usuario</label>
                                 </div>
                             </div>
                             <div class="col-12">

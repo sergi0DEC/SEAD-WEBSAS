@@ -4,7 +4,7 @@ session_start();
 
 
 if (isset($_SESSION['user_id'])) {
-  $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+  $records = $conn->prepare('SELECT id, email, name, password,rol FROM users WHERE id = :id');
   $records->bindParam(':id', $_SESSION['user_id']);
   $records->execute();
   $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -13,9 +13,14 @@ if (isset($_SESSION['user_id'])) {
 
   if (count($results) > 0) {
   $user = $results;
-    }
+  }
+  if( $user['rol'] > 2):  
+    header('Location: index.php');
+    exit();
+  endif;
 }else{
   header('Location: index.php');
+  exit();
 }
 $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);

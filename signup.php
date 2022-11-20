@@ -8,20 +8,25 @@
   require 'database.php';
 
 session_start();
-    if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
-    $records->bindParam(':id', $_SESSION['user_id']);
-    $records->execute();
-    $results = $records->fetch(PDO::FETCH_ASSOC);
+        if (isset($_SESSION['user_id'])) {
+        $records = $conn->prepare('SELECT id, email, name, password,rol FROM users WHERE id = :id');
+        $records->bindParam(':id', $_SESSION['user_id']);
+        $records->execute();
+        $results = $records->fetch(PDO::FETCH_ASSOC);
 
-    $user = null;
+        $user = null;
 
-    if (count($results) > 0) {
-    $user = $results;
-    }
-    $id=$_SESSION['user_id'];
+        if (count($results) > 0) {
+            $user = $results;
+        }
+        $id=$_SESSION['user_id'];
+        if( $user['rol'] > 1):  
+            header('Location: index.php');
+            exit();
+        endif;
     }else{
-    header('Location: index.php');
+        header('Location: index.php');
+        exit();
     }
 
 
@@ -123,7 +128,7 @@ session_start();
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input name="email" type="text" class="form-control" id="email" placeholder="Enter your Email" required>
-                                    <label for="email">Correo Electrónico</label>
+                                    <label for="email">Usuario</label>
                                 </div>
                             </div>
                             <div class="col-12">

@@ -16,6 +16,7 @@ if (isset($_SESSION['user_id'])) {
     }
 }else{
     header('Location: index.php');
+    exit();
   }
 $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);

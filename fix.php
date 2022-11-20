@@ -13,8 +13,13 @@ if (isset($_SESSION['user_id'])) {
     if (count($results) > 0) {
       $user = $results;
     }
+    if( $user['rol'] > 2):  
+        header('Location: index.php');
+        exit();
+    endif;
   }else{
     header('Location: index.php');
+    exit();
   }
   $username = $_SESSION['user_id'];
   $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";

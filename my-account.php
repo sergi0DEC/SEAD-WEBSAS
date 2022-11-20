@@ -69,7 +69,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Correo</th>
+                        <th>Usuario</th>
                         <th>Contraseña</th>
                         <th>Modificar datos</th>
                     </tr>

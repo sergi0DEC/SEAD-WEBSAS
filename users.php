@@ -11,12 +11,17 @@ if (isset($_SESSION['user_id'])) {
 
   $user = null;
 
-  if (count($results) > 0) {
-  $user = $results;
+    if (count($results) > 0) {
+    $user = $results;
     }
+    if( $user['rol'] > 1):  
+        header('Location: index.php');
+        exit();
+    endif;
 }else{
     header('Location: index.php');
-  }
+    exit();
+}
 $sql_fetch_todos = "SELECT * FROM users ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
@@ -85,7 +90,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
             <tr>
                 <!-- <th scope="col">Orden</th> -->
                 <th scope="col">ID:Usuario</th>
-                <th scope="col">EMAIL:Usuario</th>
+                <th scope="col">Usuario</th>
                 <th scope="col">NOMBRE: Usuario</th>
                 <th scope="col">ROL: Usuario</th>
                 <!-- <th scope="col">Editar</th> -->
