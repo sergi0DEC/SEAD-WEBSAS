@@ -14,7 +14,9 @@ if (isset($_SESSION['user_id'])) {
   if (count($results) > 0) {
   $user = $results;
     }
-}
+}else{
+    header('Location: index.php');
+  }
 $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
@@ -28,6 +30,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 <head>
     <title>Inventario</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
+    <meta content="width=device-width, initial-scale=0.5" name="viewport">
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,7 +190,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
             <!-- Inicio del Boton addproduct-->                             
         <?php endif; ?> 
         <div class="containerModal">                
-            <a name="" id="" class="btn btn-warning" onclick="history.back()" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+            <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
         </div>
     </div>
     <?php
@@ -197,23 +200,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <br><br><br>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -300px;">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="pagina_principal.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- <?php require('footer.php')?> -->
     <!-- Footer End -->
 
 

@@ -1,26 +1,19 @@
 <?php
 
 require '../database.php';
-if($_POST['name'] != null && $_POST['value'] != null){
-    $sql = "UPDATE product SET proname = '" . trim($_POST['name']) . "' ,amount = '" . trim($_POST['value']) . "' WHERE id = '" . $_POST['id'] . "'";
+if($_POST['value'] != null){
+    $sql = "UPDATE product SET amount = '" . trim($_POST['value']) . "' WHERE id = '" . $_POST['id'] . "'";
     if($conn->query($sql)){
-        echo "<script>alert('Proceso completado exitósamente')</script>";
         header("Refresh:0 , url =../list.php");
+        echo "<script>alert('¡Se ha editado el inventario!')</script>";
         exit();
 
     }
     else{
-        echo "<script>alert('Inconvenientes para realizar el proceso')</script>";
         header("Refresh:0 , url =../list.php");
+        echo "<script>alert('Inconvenientes para realizar el proceso')</script>";
         exit();
 
     }
 }
-else{
-//    echo "<script>alert('Por favor diligencia todos los campos')</script>";
-//    header("Refresh:0 , url = ../list.php");
-//    exit();
-
-}
-// mysqli_close($connn);
 ?>

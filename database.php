@@ -2,8 +2,11 @@
 
 $server = 'localhost';
 $username = 'root';
+//$username = 'websas';
 $password = '';
+//$password = 'Y3iC+vF7Vx(ybqjk';
 $database = 'websas_database';
+// $database = 'id19826863_websas_database';
 
 try {
   $conn = new PDO("mysql:host=$server;dbname=$database;", $username, $password);

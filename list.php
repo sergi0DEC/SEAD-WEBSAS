@@ -14,7 +14,9 @@ if (isset($_SESSION['user_id'])) {
   if (count($results) > 0) {
   $user = $results;
     }
-}
+}else{
+    header('Location: index.php');
+  }
 $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
@@ -28,7 +30,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 <head>
     <title>Inventario</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=0.45" name="viewport">
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,112 +91,115 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         <h1 style="text-align: center;">Inventarios</h1>
     </div> -->
 
-    <div>
-        <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
-            <tr>
-                <th scope="col">Orden</th>
-                <th scope="col">ID:Producto</th>
-                <th scope="col">Nombre:Producto</th>
-                <th scope="col">Cantidades</th>
-                <th scope="col">Fecha:Registro</th>
-                <?php if( $user['rol'] < 3):  ?> 
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>                           
-                <?php endif; ?>
-                
-            </tr>
-            <tbody>
-                <?php
-                $idpro = 1;
-                while ($row = mysqli_fetch_array($query)) { ?>
-                    <tr>
-                        <td scope="row"><?php echo $idpro ?></td>
-                        <td><?php echo $row['id'] ?></td>
-                        <td><?php echo $row['proname'] ?></td>
-                        <td><?php echo $row['amount'] ?></td>
-                        <td class="timeregis"><?php echo $row['time'] ?></td>
-                        <?php if( $user['rol'] < 3):  ?> 
-                            <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button"> Editar</td>
-                            <!-- <td class="delete"><a name="id" id="" class="bdelete" href="delete.php?id=<?php echo $row['id'] ?>" role="button">Eliminar</a></td>                         -->
-                            <script>
-                                function eliminar(prueba){
-                                var respuesta=confirm("¿Desea eliminar el producto?");
-                                if(respuesta==true)
-                                    window.location=prueba;
-                                else
-                                    return 0;
-                                }
-                            </script>
-                            <td class="delete"><a name="id" id="" type="button" class="bdelete" role="button"  onclick="eliminar('delete.php?id=<?php echo $row['id'] ?>')">
-                                    Eliminar
-                            </a></td>
-                        <?php endif; ?>
-                        
-                    </tr>
-                <?php
-                    $idpro++;
-                } ?>
-            </tbody>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped table-dark" style="width:90%; margin: 0 auto;">
+                <tr>
+                    <th scope="col">Orden</th>
+                    <th scope="col">ID:Producto</th>
+                    <th scope="col">Nombre:Producto</th>
+                    <th scope="col">Cantidades</th>
+                    <th scope="col">Fecha:Registro</th>
+                    <?php if( $user['rol'] < 3):  ?> 
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>                           
+                    <?php endif; ?>
+                    
+                </tr>
+                <tbody>
+                    <?php
+                    $idpro = 1;
+                    while ($row = mysqli_fetch_array($query)) { ?>
+                        <tr>
+                            <td scope="row"><?php echo $idpro ?></td>
+                            <td><?php echo $row['id'] ?></td>
+                            <td><?php echo $row['proname'] ?></td>
+                            <td><?php echo $row['amount'] ?></td>
+                            <td class="timeregis"><?php echo $row['time'] ?></td>
+                            <?php if( $user['rol'] < 3):  ?> 
+                                <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button"> Editar</td>
+                                <!-- <td class="delete"><a name="id" id="" class="bdelete" href="delete.php?id=<?php echo $row['id'] ?>" role="button">Eliminar</a></td>                         -->
+                                <script>
+                                    function eliminar(prueba){
+                                    var respuesta=confirm("¿Desea eliminar el producto?");
+                                    if(respuesta==true)
+                                        window.location=prueba;
+                                    else
+                                        return 0;
+                                    }
+                                </script>
+                                <td class="delete"><a name="id" id="" type="button" class="bdelete" role="button"  onclick="eliminar('delete.php?id=<?php echo $row['id'] ?>')">
+                                        Eliminar
+                                </a></td>
+                            <?php endif; ?>
+                            
+                        </tr>
+                    <?php
+                        $idpro++;
+                    } ?>
+                </tbody>
 
-            
-            
-        </table>
-        <br>
-        <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
-        <?php if( $user['rol'] < 3):  ?> 
-            <!-- Inicio Programación del modal -->
-            <!-- Inicio Boton add product -->
-            <div class="addproduct">
                 
-                <div class="containerModal">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Producto</button>
-                    <!-- <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a> -->
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
+                
+            </table>
+            <br>
+            <!-- <a name="" id="" class="Addlist" style="float:right" href="addlist.php" role="button">Agregar Producto</a> -->
+            <?php if( $user['rol'] < 3):  ?> 
+                <!-- Inicio Programación del modal -->
+                <!-- Inicio Boton add product -->
+                <div class="addproduct">
+                    
+                    <div class="containerModal">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@nombreDeUsuario" style="float:right; margin-right: 80px;margin-bottom:100px; font-size: 20px;">Agregar Inventario</button>
+                        <!-- <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a> -->
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="php/addlist1.php">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
+                                            <!-- <input type="text" class="form-control" id="recipient-name" name="name" required> -->
+                                            <select name="name" id="">
+                                                <option value="0">Seleccione</option>
+                                                    <?php
+                                                        
+                                                        $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
+                                                        $query = mysqli_query($connn, $sql_fetch_todos);
+                                                        
+                                                        while($row = mysqli_fetch_array($query)){
+                                                        echo '<option value="'.$row['nombre'].'">'.$row['nombre'].'</option>';
+
+                                                        }
+                                                    ?>
+                                            </select>  
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
+                                            <input type="number" class="form-control" name="amount" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
+                                    </form>
+                                </div>             
                             </div>
-                            <div class="modal-body">
-                                <form method="POST" action="php/addlist1.php">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1" class="col-form-label">Nombre de Producto:</label>
-                                        <!-- <input type="text" class="form-control" id="recipient-name" name="name" required> -->
-                                        <select name="name" id="">
-                                            <option value="0">Seleccione</option>
-                                                <?php
-                                                    
-                                                    $sql_fetch_todos = "SELECT * FROM productos_marcas ORDER BY id ASC";
-                                                    $query = mysqli_query($connn, $sql_fetch_todos);
-                                                    
-                                                    while($row = mysqli_fetch_array($query)){
-                                                    echo '<option value="'.$row['nombre'].'">'.$row['nombre'].'</option>';
-
-                                                    }
-                                                ?>
-                                        </select>  
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1" class="col-form-label">Cantidad</label>
-                                        <input type="number" class="form-control" name="amount" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" style="float:right; margin-right:120px">Guardar</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float:left; margin-left:120px">Cancelar</button>
-                                </form>
-                            </div>             
                         </div>
                     </div>
                 </div>
+                <!-- Fin Programación del modal -->
+                <!-- Fin Boton add product -->
+            <?php endif; ?>
+            <div class="containerModal">                
+                <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
             </div>
-            <!-- Fin Programación del modal -->
-            <!-- Fin Boton add product -->
-        <?php endif; ?>
-        <div class="containerModal">                
-            <a name="" id="" class="btn btn-warning" onclick="history.back()" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+
         </div>
 
     </div>
@@ -205,23 +210,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <br><br><br>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="pagina_principal.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- <?php require('footer.php')?> -->
     <!-- Footer End -->
 
 

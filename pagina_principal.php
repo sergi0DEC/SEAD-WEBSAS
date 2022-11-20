@@ -15,6 +15,8 @@
     if (count($results) > 0) {
       $user = $results;
     }
+  }else{
+    header('Location: index.php');
   }
 ?>
 
@@ -25,7 +27,7 @@
     <meta charset="utf-8">
     <title>WEB-SAS</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- <meta content="width=device-width, initial-scale=1.0" name="viewport"> -->
     <!--Meta datos-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
    <!-- Fuentes Google Web -->
@@ -64,11 +66,11 @@
 
     <!-- Herramientas Start -->
    
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-5" style="margin-top:20px">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h4 class="section-title bg-white text-center text-primary px-3">Herramientas</h4>
         </div>
-        <div class="container">
+        <div class="container" style="margin-top:60px">
             <div class="row g-8">
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                     <a href="list.php">
@@ -112,7 +114,7 @@
                     <?php endif; ?>
                     
                 </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                <!-- <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
@@ -132,7 +134,7 @@
                         </div>
                     </div>
                     </a>
-                </div>
+                </div> -->
                <!-- <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                     <a href="404.php">
                     <div class="service-item text-center pt-3">
@@ -172,23 +174,10 @@
     <!-- Herramientas End -->
      
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="pagina_principal.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="margin-top:140px">
+        <?php require('footer.php')?>                  
     </div>
+    
     <!-- Footer End -->
 
     <!-- Back to Top -->

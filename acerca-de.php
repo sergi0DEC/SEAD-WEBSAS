@@ -23,6 +23,7 @@
 <head>
     <meta charset="utf-8">
     <title>WEBSAS | Acerca de</title>
+    <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
     <!--Meta datos-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -110,7 +111,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item bg-light">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" src="media/sobre-nosotros-1.png" alt="">
+                            <img class="img-fluid" src="media/sobre-nosotros-1.jpg" alt="">
                         </div>
                         <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
                             <div class="bg-light d-flex justify-content-center pt-2 px-1">
@@ -150,23 +151,7 @@
         
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -300px;">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="pagina_principal.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php require('footer.php')?>
     <!-- Footer End -->
 
 

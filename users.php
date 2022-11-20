@@ -14,7 +14,9 @@ if (isset($_SESSION['user_id'])) {
   if (count($results) > 0) {
   $user = $results;
     }
-}
+}else{
+    header('Location: index.php');
+  }
 $sql_fetch_todos = "SELECT * FROM users ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);
 
@@ -25,7 +27,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
 <head>
     <title>Usuarios</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/icono.ico"> 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=0.5" name="viewport">
     <!-- Fuentes Google Web -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,45 +60,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <!-- Cargando End -->
 
     <!-- Barra Navegación Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="pagina_principal.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img src="media/icono.ico" alt="" height="46">
-            <h2 class="m-2 text-primary">WEB-SAS</h2>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.php" class="nav-item nav-link ">Inicio</a>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Inventario</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="list.php" class="dropdown-item active">Ver inventario</a>
-                        <a href="addlist.php" class="dropdown-item">Agregar Producto </a>
-                        <a href="fix.php" class="dropdown-item">Modificar Inventario </a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <?php if(!empty($user)): ?>
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
-                        <div class="dropdown-menu fade-down m-0">
-                            <a href="my-account.php" class="dropdown-item">Mi cuenta</a>  
-                            <a href="signup.php" class="dropdown-item">Agregar Cuenta</a>
-                            <a href="#" class="dropdown-item">Ajustes</a>
-                            <a href="logout.php" class="dropdown-item">Cerrar Sesión</a>                       
-                        </div>                   
-                    </a>
-                    <?php else: ?>
-                        <a href="list.php" class="nav-item nav-link ">Iniciar Sesión</a>
-                    <?php endif; ?>
-                    
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nueva Actividad<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
+    <?php require('navbar.php')?>
     <!-- Barra de navegacion End -->
 
     <!-- Header Start -->
@@ -140,14 +104,19 @@ $query = mysqli_query($connn, $sql_fetch_todos);
                         <!-- <td class="modify1"><a name="edit" id="" class="bfix" href="fix.php?id=<?php echo $row['id'] ?>&message=<?php echo $row['proname'] ?>&amount=<?php echo $row['amount']; ?> " role="button">
                                 Editar
                             </a></td> -->
-                        <?php if( $row['rol'] == 1):  ?> 
-                            <?php if( $row['id']== $user['id']):  ?> 
-                                <td class="modify1"><a name="edit" id="" class="bfix" href="my-account.php" role="button">Editar</a></td>
-                            <?php else: ?>
-                                <td>    Administrador</td>
-                            <?php endif; ?>
+                        <?php if( $row['id']== $user['id']):  ?> 
+                            <td class="modify1"><a name="edit" id="" class="bfix" href="my-account.php" role="button">Editar</a></td>
                         <?php else: ?>
-                            <td class="delete"><a name="id" id="" class="bdelete" href="php/delete-user.php?id=<?php echo $row['id'] ?>" role="button">Eliminar</a></td>
+                            <script>
+                                function eliminar(prueba){
+                                var respuesta=confirm("¿Desea eliminar el USUARIO? (Esta acción no se puede deshacer)");
+                                if(respuesta==true)
+                                    window.location=prueba;
+                                else
+                                    return 0;
+                                }
+                            </script>
+                            <td class="delete"><a name="id" id="" class="bdelete" onclick="eliminar('php/delete-user.php?id=<?php echo $row['id'] ?>')" role="button">Eliminar</a></td>
                         <?php endif; ?>
 
                     </tr>
@@ -158,7 +127,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
         </table>
         <br>
         <a name="" id="" class="Addlist" style="float:right" href="signup.php" role="button">Agregar Usuario</a>
-        <a name="" id="" class="btn btn-warning" onclick="history.back()" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
+        <a name="" id="" class="btn btn-warning" href="pagina_principal.php" role="button" style="float:left; font-size: 20px; margin-left:80px">Volver</a>
 
 
     </div>
@@ -169,23 +138,7 @@ $query = mysqli_query($connn, $sql_fetch_todos);
     <br><br><br>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="pagina_principal.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- <?php require('footer.php')?> -->
     <!-- Footer End -->
 
 

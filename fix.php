@@ -13,6 +13,8 @@ if (isset($_SESSION['user_id'])) {
     if (count($results) > 0) {
       $user = $results;
     }
+  }else{
+    header('Location: index.php');
   }
   $username = $_SESSION['user_id'];
   $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
@@ -56,15 +58,15 @@ if (isset($_SESSION['user_id'])) {
     <!-- Barra de navegacion End -->   
 
     <div class="container1">
-        <h1>Lista de Productos</h1>
+        <h1>Editar Inventario</h1>
     </div>
     <!-- Método para fix product -->
     <div class="fixproduct">
         <form method="POST" action="php/fix1.php">
             <div class="form-group">
-                <label for="exampleInputEmail1">Nombre del Producto a editar</label>
+                <label for="exampleInputEmail1">Nombre del Producto</label>
                 <br>
-                <input style="border-top-style: solid;" type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required>
+                <input style="border-top-style: solid;" type="text" class="form-control" name="name" value="<?php echo $_GET['message']; ?>" required disabled>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Cantidad</label>
@@ -117,24 +119,7 @@ if (isset($_SESSION['user_id'])) {
     ?>
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="index.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                            <a href="404.php">Preguntas frecuentes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php require('footer.php')?>
     <!-- Footer End -->
 
 </body>

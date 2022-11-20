@@ -14,6 +14,8 @@ if (isset($_SESSION['user_id'])) {
   if (count($results) > 0) {
   $user = $results;
     }
+}else{
+  header('Location: index.php');
 }
 $sql_fetch_todos = "SELECT * FROM product ORDER BY id ASC";
 $query = mysqli_query($connn, $sql_fetch_todos);

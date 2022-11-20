@@ -17,7 +17,7 @@
 ?>
 
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="pagina_principal.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <img src="media/icono.ico" alt="" height="46">
             <h2 class="m-2 text-primary">WEB-SAS</h2>
         </a>
@@ -26,10 +26,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="pagina_principal.php" class="nav-item nav-link">Inicio</a>
-                <a href="list.php" class="nav-item nav-link">Inventario</a>
-                <a href="productos.php" class="nav-item nav-link">Productos</a>
-                
+                <?php if(!empty($user)): ?>
+                    <a href="index.php" class="nav-item nav-link">Inicio</a>
+                    <a href="list.php" class="nav-item nav-link">Inventario</a>
+                    <a href="productos.php" class="nav-item nav-link">Productos</a>
+                <?php endif; ?> 
                 <div class="nav-item dropdown">
                     <?php if(!empty($user)): ?>
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Hola: <?= $user['name']; ?></a>
@@ -47,6 +48,8 @@
                     <?php endif; ?>                
                 </div>
             </div>
-            <a href="productos.php" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nuevo Producto<i class="fa fa-arrow-right ms-3"></i></a>
+            <?php if(!empty($user)): ?>
+                <a href="productos.php" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Nuevo Producto<i class="fa fa-arrow-right ms-3"></i></a>
+            <?php endif; ?> 
         </div>
     </nav>

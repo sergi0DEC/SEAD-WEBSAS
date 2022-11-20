@@ -7,6 +7,24 @@
 
   require 'database.php';
 
+session_start();
+    if (isset($_SESSION['user_id'])) {
+    $records = $conn->prepare('SELECT id, email, name, password FROM users WHERE id = :id');
+    $records->bindParam(':id', $_SESSION['user_id']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
+
+    $user = null;
+
+    if (count($results) > 0) {
+    $user = $results;
+    }
+    $id=$_SESSION['user_id'];
+    }else{
+    header('Location: index.php');
+    }
+
+
   $message = '';
 
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
@@ -20,8 +38,8 @@
 
     if ($stmt->execute()) {
       //$message = 'Usuario creado exitosamente';
-      function_alert("¡Usuario creado exitosamente!");
       header("Refresh:0 , url = users.php");
+      function_alert("¡Usuario creado exitosamente!");    
       exit();
     } else {
       $message = 'Lo siento, hubo un error al intentar crear su cuenta';
@@ -144,24 +162,7 @@
 
 
     <!-- Footer Start -->
-     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">websas.com</a>, Todos los derechos reservados.                                      
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="index.php">Inicio</a>
-                            <a href="acerca-de.php">Acerca de</a>
-                            <a href="404.php">Preguntas frecuentes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php require('footer.php')?>
     <!-- Footer End -->
 
 
